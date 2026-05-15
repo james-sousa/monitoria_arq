@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot - Arquitetura de Computadores</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="chatbot-wrapper">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-content">
+                    <h1>Assistente de Arquitetura</h1>
+                    <p class="subtitle">Pergunte sobre Arquitetura e Organização de Computadores</p>
+                </div>
+                <div class="status-indicator">
+                    <span class="status-dot" id="statusDot"></span>
+                    <span class="status-text" id="statusText">Verificando...</span>
+                </div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div class="chat-messages" id="chatMessages">
+                <div class="message system-message">
+                    <div class="message-content">
+                        <strong>Bem-vindo!</strong><br>
+                        Eu sou seu assistente especializado em Arquitetura e Organização de Computadores. 
+                        Faça suas perguntas sobre processadores, memória, hierarquia de cache, e muito mais!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <form id="chatForm" onsubmit="handleSendMessage(event)">
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            id="messageInput" 
+                            placeholder="Digite sua pergunta..." 
+                            autocomplete="off"
+                            disabled
+                        >
+                        <button type="submit" class="send-btn" id="sendBtn" disabled>
+                            <span class="send-icon">➤</span>
+                        </button>
+                    </div>
+                    <div class="tips">
+                        <small>Dica: Pergunte sobre cache, CPU, memória, pipelining, etc.</small>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="static/script.js"></script>
+</body>
+</html>
