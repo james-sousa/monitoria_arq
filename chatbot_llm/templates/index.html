@@ -3,56 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot - Arquitetura de Computadores</title>
+    <title>Agente — Arquitetura de Computadores</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="chatbot-wrapper">
-            <!-- Header -->
-            <div class="header">
-                <div class="header-content">
-                    <h1>Assistente de Arquitetura</h1>
-                    <p class="subtitle">Pergunte sobre Arquitetura e Organização de Computadores</p>
-                </div>
-                <div class="status-indicator">
+    <div class="shell">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">⬡</div>
+                <span class="brand-name">CompArch<em>AI</em></span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" id="btnNewChat" onclick="newSession()">
+                    <span class="nav-icon">＋</span> Nova conversa
+                </button>
+            </nav>
+
+            <div class="sidebar-topics">
+                <p class="topics-label">Tópicos sugeridos</p>
+                <button class="topic-chip" onclick="insertPrompt('Como funciona o pipeline de 5 estágios?')">Pipeline CPU</button>
+                <button class="topic-chip" onclick="insertPrompt('Explique a hierarquia de memória cache.')">Cache</button>
+                <button class="topic-chip" onclick="insertPrompt('O que é ponto flutuante IEEE 754?')">IEEE 754</button>
+                <button class="topic-chip" onclick="insertPrompt('Gere um resumo sobre pipelining em PDF.')">Gerar PDF</button>
+                <button class="topic-chip" onclick="insertPrompt('Crie 5 exercícios sobre sistemas de numeração com gabarito.')">Exercícios</button>
+                <button class="topic-chip" onclick="insertPrompt('Converta 255 de decimal para binário e hexadecimal.')">Conversão de base</button>
+                <button class="topic-chip" onclick="insertPrompt('Pesquise sobre os processadores mais recentes da Intel e AMD.')">Busca na web</button>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="status-badge" id="statusBadge">
                     <span class="status-dot" id="statusDot"></span>
-                    <span class="status-text" id="statusText">Verificando...</span>
+                    <span id="statusText">Verificando…</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <main class="main">
+
+            <!-- Top bar -->
+            <header class="topbar">
+                <button class="menu-btn" id="menuBtn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+                <div class="topbar-title">
+                    <span class="topbar-name">Agente de Arquitetura de Computadores</span>
+                    <span class="topbar-model" id="topbarModel">—</span>
+                </div>
+                <button class="clear-btn" onclick="newSession()" title="Nova conversa">↺</button>
+            </header>
+
+            <!-- Messages -->
+            <div class="messages" id="messages">
+                <div class="welcome">
+                    <div class="welcome-icon">⬡</div>
+                    <h2>Pronto para ajudar</h2>
+                    <p>Faça perguntas sobre processadores, memória, pipelining, sistemas de numeração ou peça para gerar PDFs e exercícios.</p>
                 </div>
             </div>
 
-            <!-- Chat Messages -->
-            <div class="chat-messages" id="chatMessages">
-                <div class="message system-message">
-                    <div class="message-content">
-                        <strong>Bem-vindo!</strong><br>
-                        Eu sou seu assistente especializado em Arquitetura e Organização de Computadores. 
-                        Faça suas perguntas sobre processadores, memória, hierarquia de cache, e muito mais!
-                    </div>
+            <!-- Input -->
+            <div class="composer">
+                <div class="composer-inner">
+                    <textarea
+                        id="msgInput"
+                        placeholder="Digite sua pergunta…"
+                        rows="1"
+                        disabled
+                    ></textarea>
+                    <button class="send-btn" id="sendBtn" disabled onclick="sendMessage()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
                 </div>
+                <p class="composer-hint">Enter para enviar · Shift+Enter para nova linha</p>
             </div>
 
-            <!-- Input Area -->
-            <div class="input-area">
-                <form id="chatForm" onsubmit="handleSendMessage(event)">
-                    <div class="input-wrapper">
-                        <input 
-                            type="text" 
-                            id="messageInput" 
-                            placeholder="Digite sua pergunta..." 
-                            autocomplete="off"
-                            disabled
-                        >
-                        <button type="submit" class="send-btn" id="sendBtn" disabled>
-                            <span class="send-icon">➤</span>
-                        </button>
-                    </div>
-                    <div class="tips">
-                        <small>Dica: Pergunte sobre cache, CPU, memória, pipelining, etc.</small>
-                    </div>
-                </form>
-            </div>
-        </div>
+        </main>
     </div>
 
     <script src="static/script.js"></script>

@@ -88,7 +88,8 @@ Você pode fazer perguntas como:
 
 ```
 chatbot_llm/
-├── backend.py              # Servidor Flask
+├── backend.py              # Servidor Flask com agente multiferramenta
+├── tool_gerar_pdf.py       # Gerador de PDFs educacionais
 ├── requirements.txt        # Dependências Python
 ├── .env.example           # Template de variáveis de ambiente
 ├── .env                   # Variáveis de ambiente (configure com sua chave)
@@ -98,6 +99,75 @@ chatbot_llm/
     ├── style.css          # Estilos (CSS)
     └── script.js          # Lógica do frontend (JavaScript)
 ```
+
+## Atualizações Recentes
+
+### 🔄 Migração para OpenRouter
+- **Antes**: Utilizava API Groq
+- **Agora**: Integrado com OpenRouter para acesso a múltiplos modelos LLM
+- Modelo padrão: Claude Haiku (customizável via `MODEL`)
+- Maior flexibilidade e compatibilidade com diferentes modelos
+
+### 🛠️ Sistema de Ferramentas Inteligentes
+O agente agora possui um sistema completo de ferramentas para melhorar as respostas:
+
+#### **calcular_binario**
+- Converte números entre bases (decimal, binário, hexadecimal, octal)
+- Uso automático em perguntas sobre conversão numérica
+- Exemplo: converter 255 para hexadecimal
+
+#### **calcular_cache**
+- Simula comportamento de cache (hits/misses com política FIFO)
+- Calcula taxa de acerto de cache
+- Ideal para análise de desempenho e hierarquia de memória
+
+#### **explicar_instrucao**
+- Fornece detalhes de instruções de máquina (MIPS/x86)
+- Inclui informações sobre operandos e tipo de instrução
+- Base de dados com instruções comuns
+
+#### **gerar_pdf**
+- Gera PDFs educacionais com três tipos:
+  - **resumo**: Material teórico com seções e tabelas
+  - **exercicios**: Listas de questões com gabarito
+  - **ficha**: Fichas compactas de referência rápida
+- Conteúdo formatado profissionalmente com ReportLab
+- PDFs salvos em `/tmp/pdfs_agente/`
+
+#### **buscar_web**
+- Pesquisa na web via DuckDuckGo para informações atualizadas
+- Automático para notícias, benchmarks, papers e eventos recentes
+- Citação completa das fontes nas respostas
+
+### 📋 Memória de Conversas
+- Sistema de sessões para manter contexto de conversas
+- Histórico de mensagens em memória RAM
+- Pronto para migração para Redis/banco de dados em produção
+
+### 🎓 System Prompt Aprimorado
+- Especialização profunda em Arquitetura e Organização de Computadores
+- Raciocínio multi-passo para problemas complexos
+- Regras obrigatórias para uso correto das ferramentas
+- Redirecionamento gentil para perguntas fora do escopo
+
+### 📦 Dependências Atualizadas
+```
+Flask==2.3.3
+Flask-CORS==4.0.0
+requests==2.31.0
+python-dotenv==1.0.0
+reportlab==4.0.4  # (para geração de PDFs)
+```
+
+## Configuração do OpenRouter
+
+1. Acesse [https://openrouter.ai](https://openrouter.ai) e crie uma conta
+2. Obtenha sua chave de API
+3. No arquivo `.env`, configure:
+   ```
+   OPENROUTER_API_KEY=sk_or_xxxxxxxxxxxxxxx
+   ```
+4. (Opcional) Customize o modelo alterando a variável `MODEL` em `backend.py`
 
 ## Tecnologias Utilizadas
 
